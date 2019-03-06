@@ -1,0 +1,28 @@
+import xlrd   #倒入文件
+from xlwt import *        #输出文件
+
+
+
+url_s = ['www.xiaotongshu.cn','www.richpeace.cn','www.saduoliya.com','www.tjhcmc.com',]    #查询目标网址
+book = xlrd.open_workbook(r'/Users/amiao/Desktop/biao.xlsx')        #打开本地目录
+
+sheet = book.sheet_by_name(u'Sheet1')   #列表
+
+biao = [sheet.row_values(0)]  #Excel的第一行
+lie_s = sheet.col_values(31)        #第31列是目标
+for url in url_s:    #提取目标
+    for i in range(len(lie_s)):
+        if url == lie_s[i]:     #判断和目标网址一样吗
+            print(sheet.row_values(i))
+
+book_n = Workbook(encoding='utf-8')    #打开一个新的文件，以中文写入
+sheet_n = book_n.add_sheet('Sheet1')        #创建一个新表格
+
+#写入方法
+for hang in range(0,5):         
+    for lie in range(0,49):
+        hang = int(hang)
+        lie = int(lie)
+        sheet_n.write(hang,lie,biao[hang][lie])
+
+book_n.save('/Users/amiao/Desktop/mys/xieru.xlsx')   #保存到的地址
